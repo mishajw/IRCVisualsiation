@@ -9,6 +9,7 @@ object IRCUserRetriever {
 
   private val botName = "ircvisbot"
   private val botDesc = "ircvisbot"
+  private val botPassword = "ircvisbotpassword"
 
   private val defaultPort = 6667
   private val defaultHost = "irc.freenode.net"
@@ -17,11 +18,16 @@ object IRCUserRetriever {
     val (in, out) = streams
     sendAuth(out)
     readLoop(in)
+    
+    in.close()
+    out.close()
   }
 
   private def readLoop(in: BufferedReader): Unit = {
-    while (true) {
-      val line = in.readLine()
+    var line = ""
+
+    while (line != null) {
+      line = in.readLine()
       println(line)
     }
   }
